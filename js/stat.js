@@ -20,45 +20,45 @@ var canvas = document.getElementById('canvas');
 // Контекст отрисовки
 var ctx = canvas.getContext('2d');
 
-var renderCloud = function(ctx, x, y, color) {
+var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
 };
 
-var renderText = function(ctx, textString, gap_x, gap_y, color) {
+var renderText = function (ctx, textString, gapX, gapY, color) {
   ctx.fillStyle = color;
-  ctx.font = "16px PT Mono";
-  ctx.fillText(textString, CLOUD_X + gap_x, CLOUD_Y + gap_y);
+  ctx.font = '16px PT Mono';
+  ctx.fillText(textString, CLOUD_X + gapX, CLOUD_Y + gapY);
 };
 
 // Функция поиска максимального времени прохождения
-var getMaxElement = function(arr) {
+var getMaxElement = function (arr) {
   var maxElement = arr[0];
-  
+
   for (var i = 0; i < arr.length; i++) {
     if (arr[i] > maxElement) {
       maxElement = arr[i];
     }
   }
-  
+
   return maxElement;
 };
 
-window.renderStatistics = function(ctx, names, times) {
+window.renderStatistics = function (ctx, names, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, 'white');
   renderText(ctx, 'Ура вы победили!', TEXT_X, TEXT_Y, '#000');
   renderText(ctx, 'Список результатов:', TEXT_X, TEXT_Y + TEXT_HEIGHT, '#000');
 
   var maxTime = getMaxElement(times);
-  
+
   for (var i = 0; i < names.length; i++) {
     renderText(ctx, names[i], TEXT_X + (BAR_WIDTH + BAR_GAP) * i, BAR_MAX_HEIGHT + TEXT_HEIGHT * 5, '#000');
-    
+
     barHeight = times[i] / maxTime * BAR_MAX_HEIGHT;
-    
+
     renderText(ctx, Math.round(times[i]), TEXT_X + (BAR_WIDTH + BAR_GAP) * i, CLOUD_Y + TEXT_HEIGHT * 3 + BAR_MAX_HEIGHT - barHeight, '#000');
-    
+
     // Цвет колонки игрока красный, других - синий со случайной прозрачностью.
     if (names[i] === 'Вы') {
       ctx.fillStyle = 'rgba(255, 0, 0, 1)';
