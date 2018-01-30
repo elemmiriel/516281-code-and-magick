@@ -14,9 +14,6 @@ var BAR_MAX_HEIGHT = 150;
 
 var barHeight = 150;
 
-// DOM-элемент канваса
-var canvas = document.getElementById('canvas');
-
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
