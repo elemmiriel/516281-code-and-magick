@@ -17,9 +17,6 @@ var barHeight = 150;
 // DOM-элемент канваса
 var canvas = document.getElementById('canvas');
 
-// Контекст отрисовки
-var ctx = canvas.getContext('2d');
-
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
   ctx.fillRect(x, y, CLOUD_WIDTH, CLOUD_HEIGHT);
