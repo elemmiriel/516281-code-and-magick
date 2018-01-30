@@ -181,6 +181,8 @@
   </div>
 </template>
 
+<canvas id="canvas">Ваш браузер не поддерживает некоторые технологии, используемые на этом сайте</canvas>
+
 <script>
   'use strict';
   
@@ -188,17 +190,17 @@
   var wizardSpeed = 3;
   var wizardWidth = 70;
 
-  //На скорость фаербола влияет направление ветра.
+  // На скорость фаербола влияет направление ветра.
   var getFireballSpeed = function(left) {
     return left ? 5 : 2;
   };
 
-  //Высота мага пропорциональна ширине.
+  // Высота мага пропорциональна ширине.
   var getWizardHeight = function() {
     return 1.337 * wizardWidth;
   };
 
-  //Расчитываем начальные координаты мага, [0, 0] - левый верхний угол.
+  // Расчитываем начальные координаты мага, [0, 0] - левый верхний угол.
   var getWizardX = function(width) {
     return width * 0.5;
   };
@@ -207,7 +209,9 @@
     return height * 2 / 3;
   };
 </script>
-
+    
+<script src="js/stat.js"></script>
+    
 <script src="js/game.js"></script>
 
 </body>
