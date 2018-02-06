@@ -17,9 +17,9 @@ var getName = function () {
   var fullName = '';
   var randomBoolean = Math.random(); // Для рандомного свопа фамилии и имени волшебника
   if (randomBoolean >= 0.5) {
-    fullName = FIRST_NAMES[getRandomTo(FIRST_NAMES.length - 1)] + ' ' + LAST_NAMES[getRandomTo(LAST_NAMES.length-1)];
+    fullName = FIRST_NAMES[getRandomTo(FIRST_NAMES.length - 1)] + ' ' + LAST_NAMES[getRandomTo(LAST_NAMES.length - 1)];
   } else {
-    fullName = LAST_NAMES[getRandomTo(LAST_NAMES.length - 1)] + ' ' + FIRST_NAMES[getRandomTo(FIRST_NAMES.length-1)];
+    fullName = LAST_NAMES[getRandomTo(LAST_NAMES.length - 1)] + ' ' + FIRST_NAMES[getRandomTo(FIRST_NAMES.length - 1)];
   }
   return fullName;
 };
@@ -27,17 +27,17 @@ var getName = function () {
 var getCoatColor = function () {
   var color = COAT_COLORS[getRandomTo(COAT_COLORS.length - 1)];
   return color;
-}
+};
 
 var getEyesColor = function () {
   var color = EYES_COLORS[getRandomTo(EYES_COLORS.length - 1)];
   return color;
-}
+};
 
 
 var characters = [];
 
-for (var i = 0; i < 4; i++){
+for (var i = 0; i < 4; i++) {
   var wizard = {
     name: getName(),
     coatColor: getCoatColor(),
