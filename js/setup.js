@@ -42,7 +42,7 @@ for (var i = 0; i < 4; i++) {
     name: getName(),
     coatColor: getCoatColor(),
     eyeColor: getEyesColor()
-  }
+  };
   characters.push(wizard);
 }
 
