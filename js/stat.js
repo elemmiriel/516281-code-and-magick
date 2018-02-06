@@ -38,6 +38,16 @@ var getMaxElement = function (arr) {
   return maxElement;
 };
 
+var getColor = function (name) {
+  if (name === 'Вы') {
+    return 'rgba(255, 0, 0, 1)';
+  } else {
+    // Для того, чтобы избежать 100% прозрачности был добавлен коэф. 0.1
+    var rand = '0, 0, 255,' + (Math.random() * (1 - 0.1) + 0.1);
+    return 'rgba(' + rand + ')';
+  }
+};
+
 window.renderStatistics = function (ctx, names, times) {
   renderCloud(ctx, CLOUD_X + GAP, CLOUD_Y + GAP, 'rgba(0, 0, 0, 0.7)');
   renderCloud(ctx, CLOUD_X, CLOUD_Y, 'white');
@@ -47,20 +57,15 @@ window.renderStatistics = function (ctx, names, times) {
   var maxTime = getMaxElement(times);
 
   for (var i = 0; i < names.length; i++) {
-    renderText(ctx, names[i], TEXT_X + (BAR_WIDTH + BAR_GAP) * i, BAR_MAX_HEIGHT + TEXT_HEIGHT * 5, '#000');
+    var param1 = TEXT_X + (BAR_WIDTH + BAR_GAP) * i;
+    var param2 = BAR_MAX_HEIGHT + TEXT_HEIGHT * 5;
+    renderText(ctx, names[i], param1, param2, '#000');
 
     barHeight = times[i] / maxTime * BAR_MAX_HEIGHT;
+    var param3 = CLOUD_Y + TEXT_HEIGHT * 3 + BAR_MAX_HEIGHT - barHeight;
 
-    renderText(ctx, Math.round(times[i]), TEXT_X + (BAR_WIDTH + BAR_GAP) * i, CLOUD_Y + TEXT_HEIGHT * 3 + BAR_MAX_HEIGHT - barHeight, '#000');
-
-    // Цвет колонки игрока красный, других - синий со случайной прозрачностью.
-    if (names[i] === 'Вы') {
-      ctx.fillStyle = 'rgba(255, 0, 0, 1)';
-    } else {
-      // Для того, чтобы избежать 100% прозрачности был добавлен коэф. 0.1
-      var rand = '0, 0, 255,' + (Math.random() * (1 - 0.1) + 0.1);
-      ctx.fillStyle = 'rgba(' + rand + ')';
-    }
+    renderText(ctx, Math.round(times[i]), param1, param3, '#000');
+    ctx.fillStyle = getColor(names[i]);
     ctx.fillRect(CLOUD_X + TEXT_X + (BAR_WIDTH + BAR_GAP) * i, CLOUD_Y + TEXT_HEIGHT * 4 + BAR_MAX_HEIGHT - barHeight, BAR_WIDTH, barHeight);
   }
 };
