@@ -39,23 +39,23 @@ var EYES_COLORS = [
   'green'
 ];
 
-var showSetupWindow = function () {
-  var setupBlock = document.querySelector('.setup');
-  setupBlock.classList.remove('hidden');
-};
+var FIREBALL_COLORS = [
+  '#ee4830',
+  '#30a8ee',
+  '#5ce6c0',
+  '#e848d5',
+  '#e6e848'
+];
 
-var showSimilar = function () {
-  var setupSimilarBlock = document.querySelector('.setup-similar');
-  setupSimilarBlock.classList.remove('hidden');
+var ENTER_KEY = 13;
+var ESCAPE_KEY = 27;
+
+// Получить случайное число ДО параметра max включительно
+var getRandomTo = function (max) {
+  return Math.floor(Math.random() * (max + 1));
 };
 
 var generateWizards = function () {
-
-// Получить случайное число ДО параметра max включительно
-  var getRandomTo = function (max) {
-    return Math.floor(Math.random() * (max + 1));
-  };
-
   var getName = function () {
     var needSwap = Math.random(); // Для рандомного свопа фамилии и имени волшебника
     var firstName = FIRST_NAMES[getRandomTo(FIRST_NAMES.length - 1)];
@@ -103,6 +103,110 @@ var setupSimilarWizards = function () {
   similarListElement.appendChild(fragment);
 };
 
+var setupOpen = document.querySelector('.setup-open-icon');
+var setupClose = document.querySelector('.setup-close');
+var setup = document.querySelector('.setup');
+var userNameInput = setup.querySelector('.setup-user-name');
+
+var showSimilar = function () {
+  var setupSimilarBlock = document.querySelector('.setup-similar');
+  setupSimilarBlock.classList.remove('hidden');
+};
+
+var showHideSetupWindow = function () {
+  var showWindow = function () {
+    setup.classList.remove('hidden');
+    document.addEventListener('keydown', onWindowEscPress);
+  };
+  var hideWindow = function () {
+    setup.classList.add('hidden');
+    document.removeEventListener('keydown', onWindowEscPress);
+  };
+
+  var onWindowEscPress = function (evt) {
+    if ((evt.keyCode === ESCAPE_KEY) && (document.querySelector(':focus') !== userNameInput)) {
+      hideWindow();
+    }
+  };
+
+  setupOpen.addEventListener('click', function () {
+    showWindow();
+  });
+  setupClose.addEventListener('click', function () {
+    hideWindow();
+  });
+
+  // События для управления с клавы
+  setupOpen.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEY) {
+      showWindow();
+    }
+  });
+  setupClose.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === ENTER_KEY) {
+      hideWindow();
+    }
+  });
+
+};
+
+var validateForm = function () {
+  userNameInput.addEventListener('invalid', function () {
+    if (userNameInput.validity.tooShort) {
+      userNameInput.setCustomValidity('Имя волшебника должно состоять минимум из 2-х символов');
+    } else if (userNameInput.validity.tooLong) {
+      userNameInput.setCustomValidity('Имя волшебника не должно превышать 25-ти символов');
+    } else if (userNameInput.validity.valueMissing) {
+      userNameInput.setCustomValidity('У волшебника должно быть имя!');
+    } else {
+      userNameInput.setCustomValidity('');
+    }
+  });
+
+  userNameInput.addEventListener('input', function (evt) {
+    var target = evt.target;
+    if (target.value.length < 2) {
+      target.setCustomValidity('Имя волшебника должно состоять минимум из 2-х символов');
+    } else {
+      target.setCustomValidity('');
+    }
+  });
+};
+
+var setupWizard = function () {
+  var wizard = document.querySelector('.setup-wizard');
+  var setupPlayer = document.querySelector('.setup-wizard-appearance');
+  var coatColor = wizard.querySelector('.wizard-coat');
+  var eyesColor = wizard.querySelector('.wizard-eyes');
+  var fireBall = document.querySelector('.setup-fireball-wrap');
+
+  var setupCoatColor = function () {
+    var color = COAT_COLORS[getRandomTo(COAT_COLORS.length - 1)];
+    coatColor.style.fill = color;
+    setupPlayer.querySelectorAll('input')[0].value = color;
+  };
+
+  var setupEyesColor = function () {
+    var color = EYES_COLORS[getRandomTo(EYES_COLORS.length - 1)];
+    eyesColor.style.fill = color;
+    setupPlayer.querySelectorAll('input')[1].value = color;
+  };
+
+  var setupFireBallColor = function () {
+    var color = FIREBALL_COLORS[getRandomTo(FIREBALL_COLORS.length - 1)];
+    fireBall.style.background = color;
+    fireBall.querySelector('input').value = color;
+  };
+
+  coatColor.addEventListener('click', setupCoatColor);
+  eyesColor.addEventListener('click', setupEyesColor);
+  fireBall.addEventListener('click', setupFireBallColor);
+};
+
+
 showSimilar();
-showSetupWindow();
+showHideSetupWindow();
 setupSimilarWizards();
+validateForm();
+setupWizard();
+
